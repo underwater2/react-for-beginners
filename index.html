@@ -9,6 +9,7 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
     function Btn({ text, fontSize = 12 }) {
+      // props들은 object 하나로 들어온다. 위는 ES6 문법으로 풀어쓴 것
       // fontSize가 undefined면 기본값인 12로 한다. 자바스크립트 문법. 안쓰면 다른 기본값으로 돼서 글자 나오긴 함
       return (
         <button
@@ -26,7 +27,7 @@
       );
     }
     Btn.propTypes = {
-      text: PropTypes.string.isRequired, // text가 없으면 콘솔에 오류 띄워줌
+      text: PropTypes.string.isRequired, // text가 없으면 콘솔에 경고 띄워줌
       fontSize: PropTypes.number,
     };
     function App() {
