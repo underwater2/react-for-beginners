@@ -3,37 +3,37 @@
   <body>
     <div id="root"></div>
   </body>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-    function Btn({ text, onClick }) {
-      console.log(text + " was rendered");
+    function Btn({ text, fontSize = 12 }) {
+      // fontSize가 undefined면 기본값인 12로 한다. 자바스크립트 문법. 안쓰면 다른 기본값으로 돼서 글자 나오긴 함
       return (
         <button
-          onClick={onClick}
           style={{
             backgroundColor: "tomato",
             color: "white",
             padding: "10px 20px",
             border: 0,
             borderRadius: 10,
-            fontSize: 16,
+            fontSize, // fontSize: fontSize 를 줄여쓴 것.
           }}
         >
           {text}
         </button>
       );
     }
-    const MemorizedBtn = React.memo(Btn); // Btn 컴포넌트 중에 props가 바뀐 것들만 재렌더링 해라
+    Btn.propTypes = {
+      text: PropTypes.string.isRequired, // text가 없으면 콘솔에 오류 띄워줌
+      fontSize: PropTypes.number,
+    };
     function App() {
-      const [value, setValue] = React.useState("Save Changes");
-      const changeValue = () => setValue("Revert Changes");
       return (
         <div>
-          <MemorizedBtn text={value} onClick={changeValue} />{" "}
-          {/* onClick은 이벤트 리스너가 아니라, props다. */}
-          <MemorizedBtn text="Continue" />
+          <Btn text="Save Changes" fontSize={18} />
+          <Btn text="Continue" />
         </div>
       );
     }
