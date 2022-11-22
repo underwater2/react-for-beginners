@@ -7,27 +7,33 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-    function Btn({ text, big }) {
+    function Btn({ text, onClick }) {
+      console.log(text + " was rendered");
       return (
         <button
+          onClick={onClick}
           style={{
             backgroundColor: "tomato",
             color: "white",
             padding: "10px 20px",
             border: 0,
             borderRadius: 10,
-            fontSize: big ? 18 : 16,
+            fontSize: 16,
           }}
         >
           {text}
         </button>
       );
     }
+    const MemorizedBtn = React.memo(Btn); // Btn 컴포넌트 중에 props가 바뀐 것들만 재렌더링 해라
     function App() {
+      const [value, setValue] = React.useState("Save Changes");
+      const changeValue = () => setValue("Revert Changes");
       return (
         <div>
-          <Btn text="Save changes" big={true} />
-          <Btn text="Confirm" big={false} />
+          <MemorizedBtn text={value} onClick={changeValue} />{" "}
+          {/* onClick은 이벤트 리스너가 아니라, props다. */}
+          <MemorizedBtn text="Continue" />
         </div>
       );
     }
